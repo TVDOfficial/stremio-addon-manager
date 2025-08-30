@@ -30,10 +30,7 @@ const props = defineProps({
 
 const emits = defineEmits(['delete-addon'])
 
-
-
 const defaultLogo = 'https://icongr.am/feather/box.svg?size=48&color=ffffff'
-
 
 function copyManifestURLToClipboard() {
   navigator.clipboard.writeText(props.manifestURL).then(() => {
@@ -51,69 +48,253 @@ function openAddonConfigurationPage() {
 function removeAddon() {
   emits('delete-addon', props.idx)
 }
-
 </script>
 
 <template>
-  <div class="item">
-    <div class="col-8">
-      <div class="details">
-        <div class="logo_container">
-          <img :src="logoURL || defaultLogo" />
+  <div class="addon-item">
+    <div class="addon-content">
+      <div class="addon-info">
+        <div class="addon-logo">
+          <img :src="logoURL || defaultLogo" :alt="name" />
         </div>
-        <span>{{ name }}</span>
+        <div class="addon-details">
+          <h4 class="addon-name">{{ name }}</h4>
+          <p class="addon-position">Position {{ idx + 1 }}</p>
+        </div>
+      </div>
+      
+      <div class="addon-actions">
+        <button 
+          class="button icon-only action-btn configure-btn" 
+          title="Open addon configuration page in new window"
+          :disabled="!isConfigurable" 
+          @click="openAddonConfigurationPage"
+        >
+          <i class="uil uil-setting"></i>
+        </button>
+        
+        <button 
+          class="button icon-only action-btn copy-btn" 
+          title="Copy addon manifest URL to clipboard"
+          @click="copyManifestURLToClipboard"
+        >
+          <i class="uil uil-copy"></i>
+        </button>
+        
+        <button 
+          class="button icon-only action-btn delete-btn" 
+          title="Remove addon from list"
+          :disabled="!isDeletable"
+          @click="removeAddon"
+        >
+          <i class="uil uil-trash-alt"></i>
+        </button>
       </div>
     </div>
-    <div class="col">
-      <button class="button icon-only visit-url" title="Open addon configuration page in new window"
-        :disabled="!isConfigurable" @click="openAddonConfigurationPage">
-        <img src="https://icongr.am/feather/arrow-up-right.svg?size=12">
-      </button>
-      <button class="button icon-only copy-url" title="Copy addon manifest URL to clipboard"
-        @click="copyManifestURLToClipboard">
-        <img src="https://icongr.am/feather/clipboard.svg?size=12">
-      </button>
-      <button class="button icon-only delete" title="Remove addon from list" :disabled="!isDeletable"
-        @click="removeAddon">
-        <img src="https://icongr.am/feather/trash-2.svg?size=12">
-      </button>
+    
+    <div class="drag-handle">
+      <i class="uil uil-draggabledots"></i>
     </div>
-    <i class="uil uil-draggabledots"></i>
   </div>
 </template>
 
 <style scoped>
-.sortable-list .item {
-  list-style: none;
+.addon-item {
   display: flex;
-  cursor: move;
   align-items: center;
-  border-radius: 5px;
-  padding: 10px 13px;
-  margin-bottom: 11px;
-  /* box-shadow: 0 2px 4px rgba(0,0,0,0.06); */
-  border: 1px solid #ccc;
   justify-content: space-between;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+  cursor: move;
+  position: relative;
+  overflow: hidden;
 }
 
-.dark .sortable-list .item {
-  border: 1px solid #434242;
+.addon-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
 }
 
-.item .details {
+.addon-item:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--primary-color);
+}
+
+.addon-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: 1rem;
 }
 
-.item .details img {
-  height: 60px;
-  width: 60px;
-  pointer-events: none;
-  margin-right: 12px;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 30%;
-  background-color: #262626;
+.addon-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
 
+.addon-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-tertiary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.addon-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.5rem;
+}
+
+.addon-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.addon-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--font-color);
+  margin: 0 0 0.25rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addon-position {
+  font-size: 0.875rem;
+  color: var(--font-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.addon-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary-color);
+  color: var(--font-secondary);
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.action-btn.configure-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.action-btn.copy-btn:hover {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.action-btn.delete-btn:hover {
+  background: var(--error-color);
+  color: white;
+  border-color: var(--error-color);
+}
+
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-btn:disabled:hover {
+  background: var(--bg-tertiary-color);
+  color: var(--font-secondary);
+  border-color: var(--border-color);
+  transform: none;
+  box-shadow: none;
+}
+
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--font-secondary);
+  cursor: move;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.drag-handle:hover {
+  background: var(--bg-tertiary-color);
+  color: var(--primary-color);
+}
+
+.drag-handle i {
+  font-size: 1.25rem;
+}
+
+/* Dark mode adjustments */
+.dark .addon-item {
+  background: var(--bg-secondary-color);
+}
+
+.dark .addon-logo {
+  background: var(--bg-tertiary-color);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .addon-item {
+    padding: 1rem;
+  }
+  
+  .addon-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .addon-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .addon-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .addon-name {
+    font-size: 1rem;
+  }
 }
 </style>
