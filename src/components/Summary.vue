@@ -68,6 +68,54 @@
           </div>
         </div>
 
+        <!-- Security Card -->
+        <div class="feature-card card">
+          <div class="card-header">
+            <div class="card-header-content">
+              <i class="uil uil-shield-check card-icon primary"></i>
+              <div>
+                <h3 class="card-title">Security & Privacy</h3>
+                <p class="card-subtitle">Your data is safe with us</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>
+              We take your privacy seriously. Your credentials and data are handled securely and only used for their intended purpose.
+            </p>
+            <div class="security-list">
+              <div class="security-item">
+                <i class="uil uil-lock"></i>
+                <div>
+                  <h4>Direct to Stremio</h4>
+                  <p>All data goes directly to Stremio's official API (api.strem.io)</p>
+                </div>
+              </div>
+              <div class="security-item">
+                <i class="uil uil-eye-slash"></i>
+                <div>
+                  <h4>No Storage</h4>
+                  <p>Credentials are never stored - they're only kept in memory during your session</p>
+                </div>
+              </div>
+              <div class="security-item">
+                <i class="uil uil-server"></i>
+                <div>
+                  <h4>No Backend</h4>
+                  <p>This app has no server - everything happens in your browser</p>
+                </div>
+              </div>
+              <div class="security-item">
+                <i class="uil uil-code-branch"></i>
+                <div>
+                  <h4>Open Source</h4>
+                  <p>View the source code to verify there's no hidden functionality</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- How It Works Card -->
         <div class="feature-card card">
           <div class="card-header">
@@ -152,6 +200,14 @@
 
 .feature-card {
   height: fit-content;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .feature-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card-header-content {
@@ -224,6 +280,44 @@
 .benefit-item i {
   color: var(--success-color);
   font-size: 1rem;
+}
+
+.security-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.security-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.security-item i {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.security-item h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--font-color);
+  margin: 0 0 0.25rem 0;
+}
+
+.security-item p {
+  font-size: 0.75rem;
+  color: var(--font-secondary);
+  margin: 0;
+  line-height: 1.4;
 }
 
 .steps-list {
