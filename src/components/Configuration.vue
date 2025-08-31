@@ -100,6 +100,77 @@ function setAuthKey(authKey) {
         loadUserAddons()
     }
 }
+
+// Backup and Restore Functions
+function exportAddonOrder() {
+    if (!addons.value.length) {
+        alert('No addons to export. Please load your addons first.')
+        return
+    }
+    
+    const backupData = {
+        version: '1.0',
+        timestamp: new Date().toISOString(),
+        addons: addons.value.map(addon => ({
+            name: addon.manifest.name,
+            transportUrl: addon.transportUrl,
+            logo: addon.manifest.logo,
+            description: addon.manifest.description || '',
+            version: addon.manifest.version || '',
+            id: addon.manifest.id || ''
+        }))
+    }
+    
+    const dataStr = JSON.stringify(backupData, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(dataBlob)
+    link.download = `stremio-addons-backup-${new Date().toISOString().split('T')[0]}.json`
+    link.click()
+    
+    URL.revokeObjectURL(link.href)
+}
+
+function importAddonOrder(event) {
+    const file = event.target.files[0]
+    if (!file) return
+    
+    const reader = new FileReader()
+    reader.onload = function(e) {
+        try {
+            const backupData = JSON.parse(e.target.result)
+            
+            if (!backupData.addons || !Array.isArray(backupData.addons)) {
+                alert('Invalid backup file format.')
+                return
+            }
+            
+            // Convert backup format to current addon format
+            const importedAddons = backupData.addons.map(addon => ({
+                manifest: {
+                    name: addon.name,
+                    logo: addon.logo,
+                    description: addon.description,
+                    version: addon.version,
+                    id: addon.id
+                },
+                transportUrl: addon.transportUrl
+            }))
+            
+            addons.value = importedAddons
+            alert(`Successfully imported ${importedAddons.length} addons from backup.`)
+            
+        } catch (error) {
+            console.error('Error parsing backup file:', error)
+            alert('Error reading backup file. Please make sure it\'s a valid JSON file.')
+        }
+    }
+    
+    reader.readAsText(file)
+    // Reset the input so the same file can be selected again
+    event.target.value = ''
+}
 </script>
 
 <template>
@@ -202,6 +273,42 @@ function setAuthKey(authKey) {
                                     <i class="uil uil-clock"></i>
                                     This will update your addon order in Stremio
                                 </p>
+                            </div>
+                        </div>
+
+                        <!-- Backup & Restore Step -->
+                        <div class="process-step card" v-if="addons.length > 0">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <div class="step-info">
+                                    <h3 class="step-title">Backup & Restore</h3>
+                                    <p class="step-subtitle">Save or load your addon configuration</p>
+                                </div>
+                                <i class="uil uil-save step-icon"></i>
+                            </div>
+                            <div class="step-content">
+                                <div class="backup-actions">
+                                    <button type="button" class="button primary" @click="exportAddonOrder">
+                                        <i class="uil uil-download-alt"></i>
+                                        Export Backup
+                                    </button>
+                                    <div class="import-wrapper">
+                                        <input 
+                                            type="file" 
+                                            id="import-file" 
+                                            accept=".json" 
+                                            @change="importAddonOrder" 
+                                            style="display: none;"
+                                        />
+                                        <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
+                                            <i class="uil uil-upload-alt"></i>
+                                            Import Backup
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="backup-info">
+                                    <p><i class="uil uil-info-circle"></i> Export your current addon order as a JSON file. You can import this backup on other devices or after reinstalling Stremio.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -388,6 +495,74 @@ function setAuthKey(authKey) {
     background: var(--primary-color);
 }
 
+/* Backup & Restore Styles */
+.backup-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.backup-actions .button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button.primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.button.primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.button.secondary {
+    background: var(--bg-tertiary-color);
+    color: var(--font-color);
+    border: 1px solid var(--border-color);
+}
+
+.button.secondary:hover {
+    background: var(--bg-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.backup-info {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+}
+
+.backup-info p {
+    font-size: 0.875rem;
+    color: var(--font-secondary);
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.4;
+}
+
+.backup-info i {
+    color: var(--primary-color);
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
     .configure-section {
         padding: 2rem 0;
@@ -416,6 +591,10 @@ function setAuthKey(authKey) {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
+    }
+    
+    .backup-actions {
+        flex-direction: column;
     }
 }
 </style>
