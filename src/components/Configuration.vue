@@ -125,47 +125,8 @@ function exportAddonOrder() {
     URL.revokeObjectURL(link.href)
 }
 
-function importAddonOrder(event) {
-    const file = event.target.files[0]
-    if (!file) return
-    
-    const reader = new FileReader()
-    reader.onload = function(e) {
-        try {
-            const backupData = JSON.parse(e.target.result)
-            
-            if (!backupData.addonUrls || !Array.isArray(backupData.addonUrls)) {
-                alert('Invalid backup file format. Please use a backup file created by this tool.')
-                return
-            }
-            
-            // Create a simple list of URLs for the user to copy
-            const urlList = backupData.addonUrls.join('\n')
-            
-            // Copy to clipboard
-            navigator.clipboard.writeText(urlList).then(() => {
-                alert(`Successfully loaded ${backupData.addonUrls.length} addon URLs to clipboard!\n\nTo reinstall your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
-            }).catch(() => {
-                // Fallback if clipboard fails
-                const textArea = document.createElement('textarea')
-                textArea.value = urlList
-                document.body.appendChild(textArea)
-                textArea.select()
-                document.execCommand('copy')
-                document.body.removeChild(textArea)
-                
-                alert(`Successfully loaded ${backupData.addonUrls.length} addon URLs!\n\nTo reinstall your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
-            })
-            
-        } catch (error) {
-            console.error('Error parsing backup file:', error)
-            alert('Error reading backup file. Please make sure it\'s a valid JSON file.')
-        }
-    }
-    
-    reader.readAsText(file)
-    // Reset the input so the same file can be selected again
-    event.target.value = ''
+function showRestoreInstructions() {
+    alert(`How to Restore Your Addons:\n\n1. Open your backup JSON file in a text editor\n2. Look for the "addonUrls" array\n3. Copy each URL from the array\n4. Open Stremio\n5. Go to Addons section\n6. Click the "+" button to add a new addon\n7. Paste each URL one by one\n8. Click "Install" for each addon\n\nThis will reinstall all your addons with fresh, up-to-date versions.`)
 }
 </script>
 
@@ -288,22 +249,13 @@ function importAddonOrder(event) {
                                         <i class="uil uil-download-alt"></i>
                                         Backup URLs
                                     </button>
-                                    <div class="import-wrapper">
-                                        <input 
-                                            type="file" 
-                                            id="import-file" 
-                                            accept=".json" 
-                                            @change="importAddonOrder" 
-                                            style="display: none;"
-                                        />
-                                                                                                                        <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
-                                            <i class="uil uil-upload-alt"></i>
-                                            Load URLs
-                                        </button>
-                                    </div>
+                                                                        <button type="button" class="button secondary" @click="showRestoreInstructions">
+                                        <i class="uil uil-question-circle"></i>
+                                        How to Restore
+                                    </button>
                                 </div>
                                 <div class="backup-info">
-                                    <p><i class="uil uil-info-circle"></i> Backup your addon URLs to a JSON file. When you load a backup, the URLs will be copied to your clipboard. You'll need to manually paste each URL into Stremio to reinstall your addons.</p>
+                                    <p><i class="uil uil-info-circle"></i> Backup your addon URLs to a JSON file. Click "How to Restore" for instructions on manually reinstalling your addons from the backup file.</p>
                                 </div>
                             </div>
                         </div>
