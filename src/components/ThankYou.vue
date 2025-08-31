@@ -10,6 +10,19 @@
                     Big thank you to <code class="code-highlight">Sleeyax</code> and <code class="code-highlight">&#60;Code/&#62;</code> 
                     for the conversations and code snippets that made this really easy to implement.
                 </p>
+                <div class="github-links">
+                    <p class="github-text">Special thanks to our contributors:</p>
+                    <div class="contributor-links">
+                        <a href="https://github.com/TVDOfficial" target="_blank" rel="noopener" class="contributor-link">
+                            <i class="uil uil-github"></i>
+                            <span>TVDOfficial</span>
+                        </a>
+                        <a href="https://github.com/pancake3000" target="_blank" rel="noopener" class="contributor-link">
+                            <i class="uil uil-github"></i>
+                            <span>pancake3000</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -71,6 +84,56 @@
     font-weight: 600;
 }
 
+.github-links {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.github-text {
+    font-size: 1rem;
+    color: var(--font-secondary);
+    margin: 0 0 1rem 0;
+}
+
+.contributor-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.contributor-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.contributor-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.contributor-link i {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.contributor-link span {
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     .thanks-section {
         padding: 2rem 0;
@@ -92,6 +155,21 @@
     
     .thanks-text {
         font-size: 1rem;
+    }
+    
+    .github-links {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+    
+    .contributor-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .contributor-link {
+        justify-content: center;
+        padding: 1rem 1.5rem;
     }
 }
 </style>

@@ -311,6 +311,67 @@ function importAddonOrder(event) {
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Popular Addons Section -->
+                        <div class="popular-addons-section">
+                            <div class="section-header text-center mb-5">
+                                <h3 class="section-title">Popular Addons</h3>
+                                <p class="section-subtitle">Add these recommended addons to your profile</p>
+                            </div>
+                            
+                            <div class="addons-grid">
+                                <div class="addon-item">
+                                    <div class="addon-info">
+                                        <h4>Torrentio</h4>
+                                        <p class="addon-description">Provides torrent streams from scraped torrent providers. Supports YTS, EZTV, RARBG, 1337x, ThePirateBay, and many more with RealDebrid/Premiumize support.</p>
+                                        <div class="addon-features">
+                                            <span class="feature-tag">Movies</span>
+                                            <span class="feature-tag">Series</span>
+                                            <span class="feature-tag">Anime</span>
+                                            <span class="feature-tag">Debrid Support</span>
+                                        </div>
+                                    </div>
+                                    <div class="addon-actions">
+                                        <a href="https://torrentio.strem.fun/configure" target="_blank" rel="noopener" class="btn btn-primary">
+                                            <i class="uil uil-external-link-alt"></i>
+                                            Configure & Install
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="addon-item">
+                                    <div class="addon-info">
+                                        <h4>AIO Streams</h4>
+                                        <p class="addon-description">All-in-one streaming addon with multiple sources including direct links, torrents, and various streaming platforms for movies and TV shows.</p>
+                                        <div class="addon-features">
+                                            <span class="feature-tag">Movies</span>
+                                            <span class="feature-tag">Series</span>
+                                            <span class="feature-tag">Multiple Sources</span>
+                                            <span class="feature-tag">Direct Links</span>
+                                        </div>
+                                    </div>
+                                    <div class="addon-actions">
+                                        <a href="https://aiostreams.elfhosted.com/stremio/configure" target="_blank" rel="noopener" class="btn btn-primary">
+                                            <i class="uil uil-external-link-alt"></i>
+                                            Configure & Install
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="addons-note">
+                                <i class="uil uil-info-circle"></i>
+                                <div>
+                                    <h4>How to Install Addons:</h4>
+                                    <ol>
+                                        <li>Click "Configure & Install" on any addon above</li>
+                                        <li>Configure the addon settings on the configuration page</li>
+                                        <li>Click "Install" to add it to your Stremio profile</li>
+                                        <li>The addon will appear in your Stremio addons list</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -563,6 +624,171 @@ function importAddonOrder(event) {
     flex-shrink: 0;
 }
 
+/* Popular Addons Section Styles */
+.popular-addons-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.popular-addons-section .section-header {
+    margin-bottom: 2rem;
+}
+
+.popular-addons-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.popular-addons-section .section-subtitle {
+    font-size: 1rem;
+    color: var(--font-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.addons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.addon-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+}
+
+.addon-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.addon-info {
+    flex: 1;
+}
+
+.addon-info h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0 0 0.75rem 0;
+}
+
+.addon-description {
+    font-size: 0.875rem;
+    color: var(--font-secondary);
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+}
+
+.addon-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.feature-tag {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.addon-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn i {
+    font-size: 0.875rem;
+}
+
+.addons-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(34, 197, 94, 0.05);
+    border: 1px solid rgba(34, 197, 94, 0.1);
+    border-radius: var(--radius-lg);
+    margin-top: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addons-note i {
+    color: var(--success-color);
+    font-size: 1.5rem;
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+}
+
+.addons-note h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0 0 0.75rem 0;
+}
+
+.addons-note ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.addons-note li {
+    font-size: 0.875rem;
+    color: var(--font-secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.addons-note li:last-child {
+    margin-bottom: 0;
+}
+
 @media (max-width: 768px) {
     .configure-section {
         padding: 2rem 0;
@@ -595,6 +821,30 @@ function importAddonOrder(event) {
     
     .backup-actions {
         flex-direction: column;
+    }
+    
+    .popular-addons-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+    }
+    
+    .popular-addons-section .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .addon-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .addon-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .addons-note {
+        flex-direction: column;
+        text-align: center;
     }
 }
 </style>

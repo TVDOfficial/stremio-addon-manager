@@ -25,12 +25,10 @@
               remove and re-install addons in the order they want them to appear.
               This is a tedious and cumbersome process.
             </p>
-            <div class="warning-box">
-              <i class="uil uil-exclamation-circle"></i>
-              <p><strong>Important:</strong> This is a <strong>workaround</strong> and not a <strong>solution</strong>.
-              It is not recommended to use this tool unless you are comfortable with the
-              risks involved. <strong>No support or warranty is given.</strong></p>
-            </div>
+                         <div class="warning-box">
+               <i class="uil uil-exclamation-circle"></i>
+               <p><strong>Important:</strong> This tool has been tested and is safe to use, but we recommend <strong>backing up your addon list</strong> before making any changes. You can use the backup/restore feature in the configuration section below. <strong>We are not liable if anything breaks on your account.</strong></p>
+             </div>
           </div>
         </div>
 
@@ -183,13 +181,17 @@
           </div>
           <div class="card-body">
             <div class="auth-guide">
-              <div class="guide-intro">
-                <p>Connect your Stremio account. We support 2 different authentication methods:</p>
-                <ul>
-                  <li>Login using your Stremio account (Facebook login is <strong>not supported</strong>)</li>
-                  <li>Login using an authentication key</li>
-                </ul>
-              </div>
+                             <div class="guide-intro">
+                 <p>Connect your Stremio account. We support 2 different authentication methods:</p>
+                 <ul>
+                   <li>Login using your Stremio account (Facebook login is <strong>not supported</strong>)</li>
+                   <li>Login using an authentication key</li>
+                 </ul>
+                 <div class="backup-note">
+                   <i class="uil uil-save"></i>
+                   <p><strong>Pro Tip:</strong> You can also backup and restore your addon list using the export/import feature in the configuration section below!</p>
+                 </div>
+               </div>
               
               <div class="guide-steps">
                 <div class="guide-step">
@@ -200,16 +202,28 @@
                   </div>
                 </div>
                 
-                <div class="guide-step">
-                  <div class="step-number">2</div>
-                  <div class="step-content">
-                    <h4>Open Developer Console</h4>
-                    <p>Open the developer console and paste the following code snippet:</p>
-                    <div class="code-block">
-                      <code>JSON.parse(localStorage.getItem("profile")).auth.key</code>
-                    </div>
-                  </div>
-                </div>
+                                 <div class="guide-step">
+                   <div class="step-number">2</div>
+                   <div class="step-content">
+                     <h4>Open Developer Console</h4>
+                     <p>Open the developer console using one of these methods:</p>
+                     <div class="console-methods">
+                       <div class="method-item">
+                         <strong>Windows/Linux:</strong> Press <kbd>F12</kbd> or <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>
+                       </div>
+                       <div class="method-item">
+                         <strong>Mac:</strong> Press <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>I</kbd>
+                       </div>
+                       <div class="method-item">
+                         <strong>Alternative:</strong> Right-click anywhere on the page and select "Inspect" or "Inspect Element"
+                       </div>
+                     </div>
+                     <p>Then paste the following code snippet in the console:</p>
+                     <div class="code-block">
+                       <code>JSON.parse(localStorage.getItem("profile")).auth.key</code>
+                     </div>
+                   </div>
+                 </div>
                 
                 <div class="guide-step">
                   <div class="step-number">3</div>
@@ -247,72 +261,7 @@
           </div>
         </div>
 
-        <!-- Popular Addons Card -->
-        <div class="feature-card card addons-card">
-          <div class="card-header">
-            <div class="card-header-content">
-              <i class="uil uil-plus-circle card-icon success"></i>
-              <div>
-                <h3 class="card-title">Popular Addons</h3>
-                <p class="card-subtitle">Add these recommended addons to your profile</p>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="addons-grid">
-              <div class="addon-item">
-                <div class="addon-info">
-                  <h4>Torrentio</h4>
-                  <p class="addon-description">Provides torrent streams from scraped torrent providers. Supports YTS, EZTV, RARBG, 1337x, ThePirateBay, and many more with RealDebrid/Premiumize support.</p>
-                  <div class="addon-features">
-                    <span class="feature-tag">Movies</span>
-                    <span class="feature-tag">Series</span>
-                    <span class="feature-tag">Anime</span>
-                    <span class="feature-tag">Debrid Support</span>
-                  </div>
-                </div>
-                <div class="addon-actions">
-                  <a href="https://torrentio.strem.fun/configure" target="_blank" rel="noopener" class="btn btn-primary">
-                    <i class="uil uil-external-link-alt"></i>
-                    Configure & Install
-                  </a>
-                </div>
-              </div>
-              
-              <div class="addon-item">
-                <div class="addon-info">
-                  <h4>AIO Streams</h4>
-                  <p class="addon-description">All-in-one streaming addon with multiple sources including direct links, torrents, and various streaming platforms for movies and TV shows.</p>
-                  <div class="addon-features">
-                    <span class="feature-tag">Movies</span>
-                    <span class="feature-tag">Series</span>
-                    <span class="feature-tag">Multiple Sources</span>
-                    <span class="feature-tag">Direct Links</span>
-                  </div>
-                </div>
-                <div class="addon-actions">
-                  <a href="https://aiostreams.elfhosted.com/stremio/configure" target="_blank" rel="noopener" class="btn btn-primary">
-                    <i class="uil uil-external-link-alt"></i>
-                    Configure & Install
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <div class="addons-note">
-              <i class="uil uil-info-circle"></i>
-              <div>
-                <h4>How to Install Addons:</h4>
-                <ol>
-                  <li>Click "Configure & Install" on any addon above</li>
-                  <li>Configure the addon settings on the configuration page</li>
-                  <li>Click "Install" to add it to your Stremio profile</li>
-                  <li>The addon will appear in your Stremio addons list</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -348,7 +297,7 @@
 .features-grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
 }
 
 .feature-card {
@@ -356,6 +305,12 @@
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .dark .feature-card {
@@ -366,7 +321,8 @@
 .card-header-content {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .card-icon {
@@ -389,7 +345,7 @@
 }
 
 .card-body {
-  padding-top: 1rem;
+  padding-top: 0;
 }
 
 .warning-box {
@@ -585,6 +541,35 @@
   color: var(--primary-color);
 }
 
+.backup-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  border-radius: var(--radius-md);
+  margin-top: 1rem;
+}
+
+.backup-note i {
+  color: var(--success-color);
+  font-size: 1.25rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.backup-note p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--font-color);
+  line-height: 1.4;
+}
+
+.backup-note strong {
+  color: var(--success-color);
+}
+
 .guide-steps {
   display: flex;
   flex-direction: column;
@@ -629,6 +614,37 @@
   line-height: 1.4;
 }
 
+.console-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.method-item {
+  font-size: 0.875rem;
+  color: var(--font-color);
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.method-item strong {
+  color: var(--primary-color);
+}
+
+kbd {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.75rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  color: var(--font-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 .code-block {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -648,144 +664,7 @@
   color: var(--font-color);
 }
 
-/* Popular Addons Card Styles */
-.addons-card {
-  grid-column: 1 / -1;
-  max-width: 900px;
-  margin: 0 auto;
-}
 
-.addons-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.addon-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-lg);
-  transition: all 0.3s ease;
-}
-
-.addon-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-.addon-info {
-  flex: 1;
-}
-
-.addon-info h4 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--font-color);
-  margin: 0 0 0.75rem 0;
-}
-
-.addon-description {
-  font-size: 0.875rem;
-  color: var(--font-secondary);
-  line-height: 1.5;
-  margin: 0 0 1rem 0;
-}
-
-.addon-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.feature-tag {
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--primary-color);
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid rgba(99, 102, 241, 0.2);
-}
-
-.addon-actions {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: var(--primary-color);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
-.btn i {
-  font-size: 0.875rem;
-}
-
-.addons-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: rgba(34, 197, 94, 0.05);
-  border: 1px solid rgba(34, 197, 94, 0.1);
-  border-radius: var(--radius-lg);
-  margin-top: 2rem;
-}
-
-.addons-note i {
-  color: var(--success-color);
-  font-size: 1.5rem;
-  margin-top: 0.125rem;
-  flex-shrink: 0;
-}
-
-.addons-note h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--font-color);
-  margin: 0 0 0.75rem 0;
-}
-
-.addons-note ol {
-  margin: 0;
-  padding-left: 1.25rem;
-}
-
-.addons-note li {
-  font-size: 0.875rem;
-  color: var(--font-secondary);
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
-
-.addons-note li:last-child {
-  margin-bottom: 0;
-}
 
 @media (max-width: 768px) {
   .features-section {
@@ -798,12 +677,14 @@
   
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .card-header-content {
     flex-direction: column;
     text-align: center;
-    gap: 0.75rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
   
   .process-flow {
@@ -833,19 +714,18 @@
     padding: 0.5rem;
   }
   
-  .addon-item {
+  .backup-note {
     flex-direction: column;
     text-align: center;
   }
   
-  .addon-actions {
-    width: 100%;
-    justify-content: center;
+  .console-methods {
+    gap: 0.25rem;
   }
   
-  .addons-note {
-    flex-direction: column;
+  .method-item {
     text-align: center;
+    padding: 0.75rem;
   }
 }
 </style>

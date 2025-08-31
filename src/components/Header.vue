@@ -21,27 +21,25 @@ defineProps({
 
 <template>
   <section class="hero-section">
-    <div class="hero-card card fade-in">
-      <div class="hero-content text-center">
-        <div class="hero-logo mb-4">
-          <img v-if="addonLogo" :src="addonLogo" alt="Addon logo" class="logo-image" />
-          <div v-else class="logo-placeholder">
-            <i class="uil uil-puzzle-piece"></i>
-          </div>
+    <div class="hero-content text-center fade-in">
+      <div class="hero-logo mb-4">
+        <img v-if="addonLogo" :src="addonLogo" alt="Addon logo" class="logo-image" />
+        <div v-else class="logo-placeholder">
+          <i class="uil uil-puzzle-piece"></i>
         </div>
-        
-        <h1 class="hero-title mb-3">{{ addonName }}</h1>
-        
-        <p class="hero-summary mb-4">
-          {{ addonSummary }}
-        </p>
-        
-        <div class="hero-tagline">
-          <span class="tagline-badge">
-            <i class="uil uil-check-circle"></i>
-            {{ addonTagline }}
-          </span>
-        </div>
+      </div>
+      
+      <h1 class="hero-title mb-3">{{ addonName }}</h1>
+      
+      <p class="hero-summary mb-4">
+        {{ addonSummary }}
+      </p>
+      
+      <div class="hero-tagline">
+        <span class="tagline-badge">
+          <i class="uil uil-check-circle"></i>
+          {{ addonTagline }}
+        </span>
       </div>
     </div>
   </section>
@@ -49,24 +47,19 @@ defineProps({
 
 <style scoped>
 .hero-section {
-  padding: 3rem 0;
+  padding: 4rem 0;
   min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.hero-card {
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  background: linear-gradient(135deg, var(--bg-secondary-color) 0%, var(--bg-tertiary-color) 100%);
-  border: none;
-  box-shadow: var(--shadow-xl);
+  background: var(--bg-color);
 }
 
 .hero-content {
-  padding: 3rem 2rem;
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  padding: 0 2rem;
 }
 
 .hero-logo {
@@ -145,12 +138,12 @@ defineProps({
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 2rem 0;
+    padding: 3rem 0;
     min-height: 50vh;
   }
   
   .hero-content {
-    padding: 2rem 1rem;
+    padding: 0 1rem;
   }
   
   .hero-title {
