@@ -317,12 +317,22 @@ function importAddonOrder(event) {
                             <div class="section-header text-center mb-5">
                                 <h3 class="section-title">Popular Addons</h3>
                                 <p class="section-subtitle">Add these recommended addons to your profile</p>
+                                <div class="disclaimer-note">
+                                    <i class="uil uil-info-circle"></i>
+                                    <p><strong>Note:</strong> These are not our addons - they are popular third-party addons we recommend. Use at your own discretion.</p>
+                                </div>
                             </div>
                             
                             <div class="addons-grid">
                                 <div class="addon-item">
+                                    <div class="addon-header">
+                                        <img src="https://torrentio.strem.fun/logo.png" alt="Torrentio Logo" class="addon-logo" onerror="this.style.display='none'">
+                                        <div class="addon-title">
+                                            <h4>Torrentio</h4>
+                                            <span class="addon-author">by iam4x</span>
+                                        </div>
+                                    </div>
                                     <div class="addon-info">
-                                        <h4>Torrentio</h4>
                                         <p class="addon-description">Provides torrent streams from scraped torrent providers. Supports YTS, EZTV, RARBG, 1337x, ThePirateBay, and many more with RealDebrid/Premiumize support.</p>
                                         <div class="addon-features">
                                             <span class="feature-tag">Movies</span>
@@ -340,8 +350,14 @@ function importAddonOrder(event) {
                                 </div>
                                 
                                 <div class="addon-item">
+                                    <div class="addon-header">
+                                        <img src="https://aiostreams.elfhosted.com/logo.png" alt="AIO Streams Logo" class="addon-logo" onerror="this.style.display='none'">
+                                        <div class="addon-title">
+                                            <h4>AIO Streams</h4>
+                                            <span class="addon-author">by AIO Streams</span>
+                                        </div>
+                                    </div>
                                     <div class="addon-info">
-                                        <h4>AIO Streams</h4>
                                         <p class="addon-description">All-in-one streaming addon with multiple sources including direct links, torrents, and various streaming platforms for movies and TV shows.</p>
                                         <div class="addon-features">
                                             <span class="feature-tag">Movies</span>
@@ -648,8 +664,34 @@ function importAddonOrder(event) {
 .popular-addons-section .section-subtitle {
     font-size: 1rem;
     color: var(--font-secondary);
-            max-width: 700px;
+    max-width: 700px;
     margin: 0 auto;
+}
+
+.disclaimer-note {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(245, 158, 11, 0.05);
+    border: 1px solid rgba(245, 158, 11, 0.1);
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.disclaimer-note i {
+    color: var(--warning-color);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.disclaimer-note p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--font-color);
 }
 
 .addons-grid {
@@ -679,6 +721,34 @@ function importAddonOrder(event) {
 
 .addon-info {
     flex: 1;
+}
+
+.addon-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.addon-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.addon-title h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.addon-author {
+    font-size: 0.75rem;
+    color: var(--font-secondary);
+    font-style: italic;
 }
 
 .addon-info h4 {
@@ -837,9 +907,21 @@ function importAddonOrder(event) {
         text-align: center;
     }
     
+    .addon-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
     .addon-actions {
         width: 100%;
         justify-content: center;
+    }
+    
+    .disclaimer-note {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
     }
     
     .addons-note {
