@@ -539,7 +539,7 @@ function importAddonOrder(event) {
 }
 
 .addons-list {
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
 }
 
@@ -736,6 +736,7 @@ function importAddonOrder(event) {
     border-radius: var(--radius-md);
     object-fit: cover;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .addon-title h4 {
