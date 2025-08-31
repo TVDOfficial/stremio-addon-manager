@@ -62,6 +62,10 @@
                 <i class="uil uil-check-circle"></i>
                 <span>Instant sync to Stremio</span>
               </div>
+              <div class="benefit-item">
+                <i class="uil uil-check-circle"></i>
+                <span>Backup and restore functionality</span>
+              </div>
             </div>
           </div>
         </div>
