@@ -3,14 +3,12 @@ import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import AddonItem from './AddonItem.vue'
 import Authentication from './Authentication.vue'
-import StremioPreview from './StremioPreview.vue'
 
 const stremioAPIBase = "https://api.strem.io/api/"
 const dragging = false
 let stremioAuthKey = ref('');
 let addons = ref([])
 let loadAddonsButtonText = ref('Load Addons')
-let showPreview = ref(false)
 
 function loadUserAddons() {
     const key = stremioAuthKey.value
@@ -39,7 +37,6 @@ function loadUserAddons() {
                 return
             }
             addons.value = data.result.addons
-            showPreview.value = true // Auto-show preview when addons are loaded
         })
     }).catch((error) => {
         console.error('Error fetching user addons', error)
@@ -98,10 +95,10 @@ function getNestedObjectProperty(obj, path, defaultValue = null) {
 function setAuthKey(authKey) {
     stremioAuthKey.value = authKey
     console.log('AuthKey set to: ', stremioAuthKey.value)
-}
-
-function togglePreview() {
-    showPreview.value = !showPreview.value
+    // Automatically load addons after successful authentication
+    if (authKey) {
+        loadUserAddons()
+    }
 }
 </script>
 
@@ -114,8 +111,8 @@ function togglePreview() {
             </div>
 
             <div class="configure-layout">
-                <!-- Left Side: Process Steps -->
-                <div class="process-side">
+                <!-- Centered Process Steps -->
+                <div class="process-container">
                     <div class="process-list">
                         <!-- Authentication Step -->
                         <div class="process-step card">
@@ -132,32 +129,28 @@ function togglePreview() {
                             </div>
                         </div>
 
-                        <!-- Load Addons Step -->
-                        <div class="process-step card">
+                        <!-- Load Addons Step (Hidden when addons are loaded) -->
+                        <div class="process-step card" v-if="!addons.length">
                             <div class="step-header">
                                 <div class="step-number">2</div>
                                 <div class="step-info">
-                                    <h3 class="step-title">Load Addons</h3>
-                                    <p class="step-subtitle">Fetch your current addon collection</p>
+                                    <h3 class="step-title">Loading Addons</h3>
+                                    <p class="step-subtitle">Fetching your current addon collection...</p>
                                 </div>
                                 <i class="uil uil-download-alt step-icon"></i>
                             </div>
                             <div class="step-content">
-                                <button class="button primary w-full" @click="loadUserAddons" :disabled="!stremioAuthKey">
-                                    <i class="uil uil-cloud-download"></i>
-                                    {{ loadAddonsButtonText }}
-                                </button>
-                                <p class="help-text mt-2">
-                                    <i class="uil uil-info-circle"></i>
-                                    Make sure you've authenticated first
-                                </p>
+                                <div class="loading-state">
+                                    <div class="loading-spinner"></div>
+                                    <p class="loading-text">Loading your addons...</p>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Reorder Addons Step -->
                         <div class="process-step card" v-if="addons.length > 0">
                             <div class="step-header">
-                                <div class="step-number">3</div>
+                                <div class="step-number">2</div>
                                 <div class="step-info">
                                     <h3 class="step-title">Reorder Addons</h3>
                                     <p class="step-subtitle">Drag and drop to change priority</p>
@@ -193,7 +186,7 @@ function togglePreview() {
                         <!-- Sync Addons Step -->
                         <div class="process-step card" v-if="addons.length > 0">
                             <div class="step-header">
-                                <div class="step-number">4</div>
+                                <div class="step-number">3</div>
                                 <div class="step-info">
                                     <h3 class="step-title">Sync Changes</h3>
                                     <p class="step-subtitle">Apply your changes to Stremio</p>
@@ -209,41 +202,6 @@ function togglePreview() {
                                     <i class="uil uil-clock"></i>
                                     This will update your addon order in Stremio
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Side: Preview -->
-                <div class="preview-side" v-if="addons.length > 0">
-                    <div class="preview-container">
-                        <div class="preview-header">
-                            <h3 class="preview-title">
-                                <i class="uil uil-eye"></i>
-                                Live Preview
-                            </h3>
-                            <button 
-                                class="preview-toggle" 
-                                @click="togglePreview"
-                                :class="{ 'active': showPreview }"
-                            >
-                                <i :class="showPreview ? 'uil uil-eye-slash' : 'uil uil-eye'"></i>
-                                {{ showPreview ? 'Hide' : 'Show' }}
-                            </button>
-                        </div>
-                        
-                        <div class="preview-content" v-if="showPreview">
-                            <StremioPreview 
-                                :addons="addons" 
-                                :isVisible="true"
-                            />
-                        </div>
-                        
-                        <div class="preview-placeholder" v-else>
-                            <div class="placeholder-content">
-                                <i class="uil uil-eye-slash"></i>
-                                <h4>Preview Hidden</h4>
-                                <p>Click "Show" to see how your Stremio home page will look</p>
                             </div>
                         </div>
                     </div>
@@ -281,15 +239,13 @@ function togglePreview() {
 }
 
 .configure-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
+    display: flex;
+    justify-content: center;
 }
 
-.process-side {
-    display: flex;
-    flex-direction: column;
+.process-container {
+    max-width: 800px;
+    width: 100%;
 }
 
 .process-list {
@@ -369,8 +325,37 @@ function togglePreview() {
     color: var(--primary-color);
 }
 
+.loading-state {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-tertiary-color);
+    border-radius: var(--radius-lg);
+}
+
+.loading-spinner {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: var(--font-secondary);
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .addons-list {
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -403,113 +388,6 @@ function togglePreview() {
     background: var(--primary-color);
 }
 
-/* Preview Side */
-.preview-side {
-    position: sticky;
-    top: 2rem;
-}
-
-.preview-container {
-    background: var(--bg-secondary-color);
-    border-radius: var(--radius-xl);
-    padding: 1.5rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-lg);
-}
-
-.preview-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-}
-
-.preview-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--font-color);
-    margin: 0;
-}
-
-.preview-title i {
-    color: var(--primary-color);
-}
-
-.preview-toggle {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    color: var(--font-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.preview-toggle:hover {
-    background: var(--bg-tertiary-color);
-}
-
-.preview-toggle.active {
-    background: var(--success-color);
-    border-color: var(--success-color);
-    color: white;
-}
-
-.preview-content {
-    min-height: 400px;
-}
-
-.preview-placeholder {
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-color);
-    border-radius: var(--radius-lg);
-    border: 2px dashed var(--border-color);
-}
-
-.placeholder-content {
-    text-align: center;
-    color: var(--font-secondary);
-}
-
-.placeholder-content i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-.placeholder-content h4 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: var(--font-color);
-}
-
-.placeholder-content p {
-    font-size: 0.875rem;
-    margin: 0;
-}
-
-@media (max-width: 1024px) {
-    .configure-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .preview-side {
-        position: static;
-    }
-}
-
 @media (max-width: 768px) {
     .configure-section {
         padding: 2rem 0;
@@ -519,13 +397,9 @@ function togglePreview() {
         font-size: 2rem;
     }
     
-    .configure-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .preview-side {
-        position: static;
+    .process-container {
+        max-width: 100%;
+        padding: 0 1rem;
     }
     
     .step-header {
@@ -538,19 +412,10 @@ function togglePreview() {
         padding-left: 0;
     }
     
-    .preview-header {
+    .loading-state {
         flex-direction: column;
-        gap: 1rem;
         text-align: center;
-    }
-    
-    .preview-container {
-        padding: 1rem;
-    }
-    
-    .preview-content,
-    .preview-placeholder {
-        min-height: 300px;
+        gap: 0.5rem;
     }
 }
 </style>
