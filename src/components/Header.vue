@@ -74,18 +74,18 @@ defineProps({
 }
 
 .logo-image {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
   border-radius: var(--radius-xl);
   background: var(--bg-color);
-  padding: 1rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-lg);
 }
 
 .logo-placeholder {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   margin: 0 auto;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-radius: var(--radius-xl);
@@ -96,7 +96,7 @@ defineProps({
 }
 
 .logo-placeholder i {
-  font-size: 3rem;
+  font-size: 4rem;
   color: white;
 }
 
@@ -163,12 +163,12 @@ defineProps({
   
   .logo-image,
   .logo-placeholder {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
   
   .logo-placeholder i {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
 </style>

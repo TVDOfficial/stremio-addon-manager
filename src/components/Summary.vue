@@ -117,44 +117,53 @@
         </div>
 
         <!-- How It Works Card -->
-        <div class="feature-card card">
+        <div class="feature-card card how-it-works-card">
           <div class="card-header">
             <div class="card-header-content">
               <i class="uil uil-process card-icon primary"></i>
               <div>
                 <h3 class="card-title">How It Works</h3>
-                <p class="card-subtitle">Simple 4-step process</p>
+                <p class="card-subtitle">Simple 3-step process</p>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-number">1</div>
+            <div class="process-flow">
+              <div class="process-step">
+                <div class="step-icon-wrapper">
+                  <i class="uil uil-shield-check"></i>
+                </div>
                 <div class="step-content">
-                  <h4>Connect Account</h4>
-                  <p>Use your Stremio credentials or AuthKey to connect</p>
+                  <h4>1. Authenticate</h4>
+                  <p>Connect your Stremio account securely</p>
                 </div>
               </div>
-              <div class="step-item">
-                <div class="step-number">2</div>
+              
+              <div class="process-arrow">
+                <i class="uil uil-arrow-right"></i>
+              </div>
+              
+              <div class="process-step">
+                <div class="step-icon-wrapper">
+                  <i class="uil uil-sort-amount-down"></i>
+                </div>
                 <div class="step-content">
-                  <h4>Load Addons</h4>
-                  <p>Fetch your current addon collection</p>
+                  <h4>2. Reorder</h4>
+                  <p>Drag and drop to arrange addons</p>
                 </div>
               </div>
-              <div class="step-item">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                  <h4>Reorder</h4>
-                  <p>Drag and drop to arrange addons as desired</p>
-                </div>
+              
+              <div class="process-arrow">
+                <i class="uil uil-arrow-right"></i>
               </div>
-              <div class="step-item">
-                <div class="step-number">4</div>
+              
+              <div class="process-step">
+                <div class="step-icon-wrapper">
+                  <i class="uil uil-sync"></i>
+                </div>
                 <div class="step-content">
-                  <h4>Sync</h4>
-                  <p>Apply changes back to your Stremio profile</p>
+                  <h4>3. Sync</h4>
+                  <p>Apply changes to your Stremio profile</p>
                 </div>
               </div>
             </div>
@@ -320,30 +329,45 @@
   line-height: 1.4;
 }
 
-.steps-list {
+/* How It Works Card Styles */
+.how-it-works-card {
+  grid-column: 1 / -1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.process-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.process-step {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 150px;
 }
 
-.step-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.step-number {
-  width: 2rem;
-  height: 2rem;
-  background: var(--primary-color);
-  color: white;
+.step-icon-wrapper {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 0.875rem;
-  flex-shrink: 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.step-icon-wrapper i {
+  font-size: 1.5rem;
+  color: white;
 }
 
 .step-content h4 {
@@ -357,6 +381,16 @@
   font-size: 0.875rem;
   color: var(--font-secondary);
   margin: 0;
+  line-height: 1.4;
+}
+
+.process-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  opacity: 0.7;
 }
 
 @media (max-width: 768px) {
@@ -376,6 +410,19 @@
     flex-direction: column;
     text-align: center;
     gap: 0.75rem;
+  }
+  
+  .process-flow {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .process-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .process-step {
+    min-width: auto;
   }
 }
 </style>
