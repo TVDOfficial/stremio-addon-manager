@@ -144,7 +144,7 @@ function importAddonOrder(event) {
             
             // Copy to clipboard
             navigator.clipboard.writeText(urlList).then(() => {
-                alert(`Successfully imported ${backupData.addonUrls.length} addon URLs to clipboard!\n\nTo restore your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
+                alert(`Successfully loaded ${backupData.addonUrls.length} addon URLs to clipboard!\n\nTo reinstall your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
             }).catch(() => {
                 // Fallback if clipboard fails
                 const textArea = document.createElement('textarea')
@@ -154,7 +154,7 @@ function importAddonOrder(event) {
                 document.execCommand('copy')
                 document.body.removeChild(textArea)
                 
-                alert(`Successfully imported ${backupData.addonUrls.length} addon URLs!\n\nTo restore your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
+                alert(`Successfully loaded ${backupData.addonUrls.length} addon URLs!\n\nTo reinstall your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
             })
             
         } catch (error) {
@@ -277,8 +277,8 @@ function importAddonOrder(event) {
                             <div class="step-header">
                                 <div class="step-number">4</div>
                                 <div class="step-info">
-                                    <h3 class="step-title">Backup & Restore</h3>
-                                    <p class="step-subtitle">Save addon URLs or restore from backup</p>
+                                    <h3 class="step-title">Backup URLs</h3>
+                                    <p class="step-subtitle">Save your addon URLs for manual reinstallation</p>
                                 </div>
                                 <i class="uil uil-save step-icon"></i>
                             </div>
@@ -286,7 +286,7 @@ function importAddonOrder(event) {
                                 <div class="backup-actions">
                                     <button type="button" class="button primary" @click="exportAddonOrder">
                                         <i class="uil uil-download-alt"></i>
-                                        Export URLs
+                                        Backup URLs
                                     </button>
                                     <div class="import-wrapper">
                                         <input 
@@ -296,14 +296,14 @@ function importAddonOrder(event) {
                                             @change="importAddonOrder" 
                                             style="display: none;"
                                         />
-                                                                                <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
+                                                                                                                        <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
                                             <i class="uil uil-upload-alt"></i>
-                                            Import URLs
+                                            Load URLs
                                         </button>
                                     </div>
                                 </div>
                                 <div class="backup-info">
-                                    <p><i class="uil uil-info-circle"></i> Export your addon URLs as a JSON file. When you import, the URLs will be copied to your clipboard for easy reinstallation in Stremio.</p>
+                                    <p><i class="uil uil-info-circle"></i> Backup your addon URLs to a JSON file. When you load a backup, the URLs will be copied to your clipboard. You'll need to manually paste each URL into Stremio to reinstall your addons.</p>
                                 </div>
                             </div>
                         </div>
