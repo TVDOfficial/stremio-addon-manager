@@ -17,9 +17,9 @@
                             <i class="uil uil-github"></i>
                             <span>TVDOfficial</span>
                         </a>
-                        <a href="https://github.com/pancake3000" target="_blank" rel="noopener" class="contributor-link">
+                        <a href="https://github.com/sleeyax" target="_blank" rel="noopener" class="contributor-link">
                             <i class="uil uil-github"></i>
-                            <span>pancake3000</span>
+                            <span>sleeyax</span>
                         </a>
                     </div>
                 </div>

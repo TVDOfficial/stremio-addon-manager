@@ -1,0 +1,10 @@
+[33mcc6c309[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m  Fix Vue syntax error: replace onclick with @click and add proper script setup
+[33m47e08da[m  Add detailed auth key guide with step-by-step instructions
+[33m0f9dfa5[m  Improve UI: larger logo and better How It Works section design
+[33maa5d509[m  Simplify layout: remove preview, center steps, auto-load addons after auth
+[33m6fef850[m  Redesign Configuration layout with side-by-side process and preview
+[33ma7af152[m  Add Stremio home page preview feature with interactive toggle
+[33m2377170[m  Add security section and enhance UI with modern glassmorphism design
+[33m69c5fdb[m  Complete UI redesign with modern card-based layout and professional styling
+[33m44815f9[m Add stremio login (#5)
+[33m2abeb9b[m build amd64 and arm64 image

@@ -196,7 +196,7 @@ function importAddonOrder(event) {
                                 <i class="uil uil-shield-check step-icon"></i>
                             </div>
                             <div class="step-content">
-                                <Authentication :stremioAPIBase="stremioAPIBase" @auth-key="setAuthKey" />
+                <Authentication :stremioAPIBase="stremioAPIBase" @auth-key="setAuthKey" />
                             </div>
                         </div>
 
@@ -238,18 +238,18 @@ function importAddonOrder(event) {
                                         @start="dragging = true" 
                                         @end="dragging = false"
                                     >
-                                        <template #item="{ element, index }">
+                    <template #item="{ element, index }">
                                             <AddonItem 
                                                 :name="element.manifest.name" 
                                                 :idx="index" 
                                                 :manifestURL="element.transportUrl"
-                                                :logoURL="element.manifest.logo"
-                                                :isDeletable="!getNestedObjectProperty(element, 'flags.protected', false)"
-                                                :isConfigurable="getNestedObjectProperty(element, 'manifest.behaviorHints.configurable', false)"
+                            :logoURL="element.manifest.logo"
+                            :isDeletable="!getNestedObjectProperty(element, 'flags.protected', false)"
+                            :isConfigurable="getNestedObjectProperty(element, 'manifest.behaviorHints.configurable', false)"
                                                 @delete-addon="removeAddon" 
                                             />
-                                        </template>
-                                    </draggable>
+                    </template>
+                </draggable>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +303,7 @@ function importAddonOrder(event) {
                                         <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
                                             <i class="uil uil-upload-alt"></i>
                                             Import Backup
-                                        </button>
+                </button>
                                     </div>
                                 </div>
                                 <div class="backup-info">
@@ -402,7 +402,7 @@ function importAddonOrder(event) {
 .section-subtitle {
     font-size: 1.125rem;
     color: var(--font-secondary);
-    max-width: 600px;
+            max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -648,7 +648,7 @@ function importAddonOrder(event) {
 .popular-addons-section .section-subtitle {
     font-size: 1rem;
     color: var(--font-secondary);
-    max-width: 500px;
+            max-width: 700px;
     margin: 0 auto;
 }
 
@@ -656,7 +656,7 @@ function importAddonOrder(event) {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -754,7 +754,7 @@ function importAddonOrder(event) {
     border: 1px solid rgba(34, 197, 94, 0.1);
     border-radius: var(--radius-lg);
     margin-top: 2rem;
-    max-width: 900px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
