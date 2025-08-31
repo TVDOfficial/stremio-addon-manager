@@ -149,7 +149,7 @@ function removeAddon() {
   width: 60px;
   height: 60px;
   border-radius: var(--radius-lg);
-  background: var(--bg-tertiary-color);
+  background: #1e293b;
   display: flex;
   align-items: center;
   justify-content: center;

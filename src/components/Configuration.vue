@@ -736,7 +736,7 @@ function importAddonOrder(event) {
     border-radius: var(--radius-md);
     object-fit: cover;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.2);
+    background: #1e293b;
 }
 
 .addon-title h4 {
@@ -931,3 +931,6 @@ function importAddonOrder(event) {
     }
 }
 </style>
+
+
+
