@@ -113,135 +113,142 @@ function togglePreview() {
                 <p class="section-subtitle">Manage and organize your Stremio addons with ease</p>
             </div>
 
-            <div class="configure-grid">
-                <!-- Authentication Card -->
-                <div class="configure-card card">
-                    <div class="card-header">
-                        <div class="card-header-content">
-                            <i class="uil uil-shield-check card-icon"></i>
-                            <div>
-                                <h3 class="card-title">Authentication</h3>
-                                <p class="card-subtitle">Connect your Stremio account</p>
+            <div class="configure-layout">
+                <!-- Left Side: Process Steps -->
+                <div class="process-side">
+                    <div class="process-list">
+                        <!-- Authentication Step -->
+                        <div class="process-step card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-info">
+                                    <h3 class="step-title">Authentication</h3>
+                                    <p class="step-subtitle">Connect your Stremio account</p>
+                                </div>
+                                <i class="uil uil-shield-check step-icon"></i>
+                            </div>
+                            <div class="step-content">
+                                <Authentication :stremioAPIBase="stremioAPIBase" @auth-key="setAuthKey" />
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <Authentication :stremioAPIBase="stremioAPIBase" @auth-key="setAuthKey" />
+
+                        <!-- Load Addons Step -->
+                        <div class="process-step card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <div class="step-info">
+                                    <h3 class="step-title">Load Addons</h3>
+                                    <p class="step-subtitle">Fetch your current addon collection</p>
+                                </div>
+                                <i class="uil uil-download-alt step-icon"></i>
+                            </div>
+                            <div class="step-content">
+                                <button class="button primary w-full" @click="loadUserAddons" :disabled="!stremioAuthKey">
+                                    <i class="uil uil-cloud-download"></i>
+                                    {{ loadAddonsButtonText }}
+                                </button>
+                                <p class="help-text mt-2">
+                                    <i class="uil uil-info-circle"></i>
+                                    Make sure you've authenticated first
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Reorder Addons Step -->
+                        <div class="process-step card" v-if="addons.length > 0">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <div class="step-info">
+                                    <h3 class="step-title">Reorder Addons</h3>
+                                    <p class="step-subtitle">Drag and drop to change priority</p>
+                                </div>
+                                <i class="uil uil-sort-amount-down step-icon"></i>
+                            </div>
+                            <div class="step-content">
+                                <div class="addons-list">
+                                    <draggable 
+                                        :list="addons" 
+                                        item-key="transportUrl" 
+                                        class="sortable-list" 
+                                        ghost-class="ghost"
+                                        @start="dragging = true" 
+                                        @end="dragging = false"
+                                    >
+                                        <template #item="{ element, index }">
+                                            <AddonItem 
+                                                :name="element.manifest.name" 
+                                                :idx="index" 
+                                                :manifestURL="element.transportUrl"
+                                                :logoURL="element.manifest.logo"
+                                                :isDeletable="!getNestedObjectProperty(element, 'flags.protected', false)"
+                                                :isConfigurable="getNestedObjectProperty(element, 'manifest.behaviorHints.configurable', false)"
+                                                @delete-addon="removeAddon" 
+                                            />
+                                        </template>
+                                    </draggable>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sync Addons Step -->
+                        <div class="process-step card" v-if="addons.length > 0">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <div class="step-info">
+                                    <h3 class="step-title">Sync Changes</h3>
+                                    <p class="step-subtitle">Apply your changes to Stremio</p>
+                                </div>
+                                <i class="uil uil-sync step-icon"></i>
+                            </div>
+                            <div class="step-content">
+                                <button type="button" class="button success w-full" @click="syncUserAddons">
+                                    <i class="uil uil-cloud-upload"></i>
+                                    Sync to Stremio
+                                </button>
+                                <p class="help-text mt-2">
+                                    <i class="uil uil-clock"></i>
+                                    This will update your addon order in Stremio
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Load Addons Card -->
-                <div class="configure-card card">
-                    <div class="card-header">
-                        <div class="card-header-content">
-                            <i class="uil uil-download-alt card-icon"></i>
-                            <div>
-                                <h3 class="card-title">Step 1: Load Addons</h3>
-                                <p class="card-subtitle">Fetch your current addon collection</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <button class="button primary w-full" @click="loadUserAddons" :disabled="!stremioAuthKey">
-                            <i class="uil uil-cloud-download"></i>
-                            {{ loadAddonsButtonText }}
-                        </button>
-                        <p class="help-text mt-2">
-                            <i class="uil uil-info-circle"></i>
-                            Make sure you've authenticated first
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Reorder Addons Card -->
-                <div class="configure-card card" v-if="addons.length > 0">
-                    <div class="card-header">
-                        <div class="card-header-content">
-                            <i class="uil uil-sort-amount-down card-icon"></i>
-                            <div>
-                                <h3 class="card-title">Step 2: Reorder Addons</h3>
-                                <p class="card-subtitle">Drag and drop to change priority</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="addons-list">
-                            <draggable 
-                                :list="addons" 
-                                item-key="transportUrl" 
-                                class="sortable-list" 
-                                ghost-class="ghost"
-                                @start="dragging = true" 
-                                @end="dragging = false"
+                <!-- Right Side: Preview -->
+                <div class="preview-side" v-if="addons.length > 0">
+                    <div class="preview-container">
+                        <div class="preview-header">
+                            <h3 class="preview-title">
+                                <i class="uil uil-eye"></i>
+                                Live Preview
+                            </h3>
+                            <button 
+                                class="preview-toggle" 
+                                @click="togglePreview"
+                                :class="{ 'active': showPreview }"
                             >
-                                <template #item="{ element, index }">
-                                    <AddonItem 
-                                        :name="element.manifest.name" 
-                                        :idx="index" 
-                                        :manifestURL="element.transportUrl"
-                                        :logoURL="element.manifest.logo"
-                                        :isDeletable="!getNestedObjectProperty(element, 'flags.protected', false)"
-                                        :isConfigurable="getNestedObjectProperty(element, 'manifest.behaviorHints.configurable', false)"
-                                        @delete-addon="removeAddon" 
-                                    />
-                                </template>
-                            </draggable>
+                                <i :class="showPreview ? 'uil uil-eye-slash' : 'uil uil-eye'"></i>
+                                {{ showPreview ? 'Hide' : 'Show' }}
+                            </button>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Sync Addons Card -->
-                <div class="configure-card card" v-if="addons.length > 0">
-                    <div class="card-header">
-                        <div class="card-header-content">
-                            <i class="uil uil-sync card-icon"></i>
-                            <div>
-                                <h3 class="card-title">Step 3: Sync Changes</h3>
-                                <p class="card-subtitle">Apply your changes to Stremio</p>
+                        
+                        <div class="preview-content" v-if="showPreview">
+                            <StremioPreview 
+                                :addons="addons" 
+                                :isVisible="true"
+                            />
+                        </div>
+                        
+                        <div class="preview-placeholder" v-else>
+                            <div class="placeholder-content">
+                                <i class="uil uil-eye-slash"></i>
+                                <h4>Preview Hidden</h4>
+                                <p>Click "Show" to see how your Stremio home page will look</p>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <button type="button" class="button success w-full" @click="syncUserAddons">
-                            <i class="uil uil-cloud-upload"></i>
-                            Sync to Stremio
-                        </button>
-                        <p class="help-text mt-2">
-                            <i class="uil uil-clock"></i>
-                            This will update your addon order in Stremio
-                        </p>
-                    </div>
                 </div>
             </div>
-
-            <!-- Preview Toggle -->
-            <div class="preview-toggle-section" v-if="addons.length > 0">
-                <div class="preview-toggle-card card">
-                    <div class="preview-toggle-content">
-                        <div class="preview-toggle-info">
-                            <i class="uil uil-eye"></i>
-                            <div>
-                                <h4>Preview Your Changes</h4>
-                                <p>See how your Stremio home page will look after reordering</p>
-                            </div>
-                        </div>
-                        <button 
-                            class="button primary" 
-                            @click="togglePreview"
-                            :class="{ 'active': showPreview }"
-                        >
-                            <i :class="showPreview ? 'uil uil-eye-slash' : 'uil uil-eye'"></i>
-                            {{ showPreview ? 'Hide Preview' : 'Show Preview' }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stremio Preview -->
-            <StremioPreview 
-                :addons="addons" 
-                :isVisible="showPreview && addons.length > 0"
-            />
         </div>
     </section>
 </template>
@@ -273,33 +280,77 @@ function togglePreview() {
     margin: 0 auto;
 }
 
-.configure-grid {
+.configure-layout {
     display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    margin-bottom: 3rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
 }
 
-.configure-card {
-    height: fit-content;
+.process-side {
+    display: flex;
+    flex-direction: column;
 }
 
-.card-header-content {
+.process-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.process-step {
+    position: relative;
+}
+
+.step-header {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
-.card-icon {
+.step-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.step-info {
+    flex: 1;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.step-subtitle {
+    font-size: 0.875rem;
+    color: var(--font-secondary);
+    margin: 0;
+}
+
+.step-icon {
     font-size: 1.5rem;
     color: var(--primary-color);
     background: var(--bg-tertiary-color);
     padding: 0.75rem;
     border-radius: var(--radius-lg);
+    flex-shrink: 0;
 }
 
-.card-body {
-    padding-top: 1rem;
+.step-content {
+    padding-left: 3.5rem;
 }
 
 .w-full {
@@ -319,7 +370,7 @@ function togglePreview() {
 }
 
 .addons-list {
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
@@ -352,50 +403,111 @@ function togglePreview() {
     background: var(--primary-color);
 }
 
-.preview-toggle-section {
-    margin-bottom: 2rem;
+/* Preview Side */
+.preview-side {
+    position: sticky;
+    top: 2rem;
 }
 
-.preview-toggle-card {
-    max-width: 600px;
-    margin: 0 auto;
+.preview-container {
+    background: var(--bg-secondary-color);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
 }
 
-.preview-toggle-content {
+.preview-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.preview-toggle-info {
+.preview-title {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    flex: 1;
-}
-
-.preview-toggle-info i {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.preview-toggle-info h4 {
-    font-size: 1.125rem;
+    gap: 0.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--font-color);
-    margin: 0 0 0.25rem 0;
-}
-
-.preview-toggle-info p {
-    font-size: 0.875rem;
-    color: var(--font-secondary);
     margin: 0;
 }
 
-.button.active {
+.preview-title i {
+    color: var(--primary-color);
+}
+
+.preview-toggle {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--font-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.preview-toggle:hover {
+    background: var(--bg-tertiary-color);
+}
+
+.preview-toggle.active {
     background: var(--success-color);
     border-color: var(--success-color);
+    color: white;
+}
+
+.preview-content {
+    min-height: 400px;
+}
+
+.preview-placeholder {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--border-color);
+}
+
+.placeholder-content {
+    text-align: center;
+    color: var(--font-secondary);
+}
+
+.placeholder-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.placeholder-content h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--font-color);
+}
+
+.placeholder-content p {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .configure-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .preview-side {
+        position: static;
+    }
 }
 
 @media (max-width: 768px) {
@@ -407,25 +519,38 @@ function togglePreview() {
         font-size: 2rem;
     }
     
-    .configure-grid {
+    .configure-layout {
         grid-template-columns: 1fr;
-        margin-bottom: 2rem;
+        gap: 2rem;
     }
     
-    .card-header-content {
+    .preview-side {
+        position: static;
+    }
+    
+    .step-header {
         flex-direction: column;
         text-align: center;
         gap: 0.75rem;
     }
     
-    .preview-toggle-content {
+    .step-content {
+        padding-left: 0;
+    }
+    
+    .preview-header {
         flex-direction: column;
+        gap: 1rem;
         text-align: center;
     }
     
-    .preview-toggle-info {
-        flex-direction: column;
-        text-align: center;
+    .preview-container {
+        padding: 1rem;
+    }
+    
+    .preview-content,
+    .preview-placeholder {
+        min-height: 300px;
     }
 }
 </style>
