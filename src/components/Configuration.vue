@@ -3,12 +3,14 @@ import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import AddonItem from './AddonItem.vue'
 import Authentication from './Authentication.vue'
+import StremioPreview from './StremioPreview.vue'
 
 const stremioAPIBase = "https://api.strem.io/api/"
 const dragging = false
 let stremioAuthKey = ref('');
 let addons = ref([])
 let loadAddonsButtonText = ref('Load Addons')
+let showPreview = ref(false)
 
 function loadUserAddons() {
     const key = stremioAuthKey.value
@@ -37,6 +39,7 @@ function loadUserAddons() {
                 return
             }
             addons.value = data.result.addons
+            showPreview.value = true // Auto-show preview when addons are loaded
         })
     }).catch((error) => {
         console.error('Error fetching user addons', error)
@@ -95,6 +98,10 @@ function getNestedObjectProperty(obj, path, defaultValue = null) {
 function setAuthKey(authKey) {
     stremioAuthKey.value = authKey
     console.log('AuthKey set to: ', stremioAuthKey.value)
+}
+
+function togglePreview() {
+    showPreview.value = !showPreview.value
 }
 </script>
 
@@ -206,6 +213,35 @@ function setAuthKey(authKey) {
                     </div>
                 </div>
             </div>
+
+            <!-- Preview Toggle -->
+            <div class="preview-toggle-section" v-if="addons.length > 0">
+                <div class="preview-toggle-card card">
+                    <div class="preview-toggle-content">
+                        <div class="preview-toggle-info">
+                            <i class="uil uil-eye"></i>
+                            <div>
+                                <h4>Preview Your Changes</h4>
+                                <p>See how your Stremio home page will look after reordering</p>
+                            </div>
+                        </div>
+                        <button 
+                            class="button primary" 
+                            @click="togglePreview"
+                            :class="{ 'active': showPreview }"
+                        >
+                            <i :class="showPreview ? 'uil uil-eye-slash' : 'uil uil-eye'"></i>
+                            {{ showPreview ? 'Hide Preview' : 'Show Preview' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stremio Preview -->
+            <StremioPreview 
+                :addons="addons" 
+                :isVisible="showPreview && addons.length > 0"
+            />
         </div>
     </section>
 </template>
@@ -241,6 +277,7 @@ function setAuthKey(authKey) {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    margin-bottom: 3rem;
 }
 
 .configure-card {
@@ -315,6 +352,52 @@ function setAuthKey(authKey) {
     background: var(--primary-color);
 }
 
+.preview-toggle-section {
+    margin-bottom: 2rem;
+}
+
+.preview-toggle-card {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.preview-toggle-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.preview-toggle-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.preview-toggle-info i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.preview-toggle-info h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.preview-toggle-info p {
+    font-size: 0.875rem;
+    color: var(--font-secondary);
+    margin: 0;
+}
+
+.button.active {
+    background: var(--success-color);
+    border-color: var(--success-color);
+}
+
 @media (max-width: 768px) {
     .configure-section {
         padding: 2rem 0;
@@ -326,12 +409,23 @@ function setAuthKey(authKey) {
     
     .configure-grid {
         grid-template-columns: 1fr;
+        margin-bottom: 2rem;
     }
     
     .card-header-content {
         flex-direction: column;
         text-align: center;
         gap: 0.75rem;
+    }
+    
+    .preview-toggle-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .preview-toggle-info {
+        flex-direction: column;
+        text-align: center;
     }
 }
 </style>
