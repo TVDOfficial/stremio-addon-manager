@@ -326,7 +326,7 @@ function importAddonOrder(event) {
                             <div class="addons-grid">
                                 <div class="addon-item">
                                     <div class="addon-header">
-                                        <img src="https://torrentio.strem.fun/logo.png" alt="Torrentio Logo" class="addon-logo" onerror="this.style.display='none'">
+                                        <img src="https://torrentio.strem.fun/images/logo_v1.png" alt="Torrentio Logo" class="addon-logo" onerror="this.style.display='none'">
                                         <div class="addon-title">
                                             <h4>Torrentio</h4>
                                             <span class="addon-author">by iam4x</span>
