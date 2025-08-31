@@ -111,14 +111,7 @@ function exportAddonOrder() {
     const backupData = {
         version: '1.0',
         timestamp: new Date().toISOString(),
-        addons: addons.value.map(addon => ({
-            name: addon.manifest.name,
-            transportUrl: addon.transportUrl,
-            logo: addon.manifest.logo,
-            description: addon.manifest.description || '',
-            version: addon.manifest.version || '',
-            id: addon.manifest.id || ''
-        }))
+        addonUrls: addons.value.map(addon => addon.transportUrl)
     }
     
     const dataStr = JSON.stringify(backupData, null, 2)
@@ -126,7 +119,7 @@ function exportAddonOrder() {
     
     const link = document.createElement('a')
     link.href = URL.createObjectURL(dataBlob)
-    link.download = `stremio-addons-backup-${new Date().toISOString().split('T')[0]}.json`
+    link.download = `stremio-addon-urls-${new Date().toISOString().split('T')[0]}.json`
     link.click()
     
     URL.revokeObjectURL(link.href)
@@ -141,25 +134,28 @@ function importAddonOrder(event) {
         try {
             const backupData = JSON.parse(e.target.result)
             
-            if (!backupData.addons || !Array.isArray(backupData.addons)) {
-                alert('Invalid backup file format.')
+            if (!backupData.addonUrls || !Array.isArray(backupData.addonUrls)) {
+                alert('Invalid backup file format. Please use a backup file created by this tool.')
                 return
             }
             
-            // Convert backup format to current addon format
-            const importedAddons = backupData.addons.map(addon => ({
-                manifest: {
-                    name: addon.name,
-                    logo: addon.logo,
-                    description: addon.description,
-                    version: addon.version,
-                    id: addon.id
-                },
-                transportUrl: addon.transportUrl
-            }))
+            // Create a simple list of URLs for the user to copy
+            const urlList = backupData.addonUrls.join('\n')
             
-            addons.value = importedAddons
-            alert(`Successfully imported ${importedAddons.length} addons from backup.`)
+            // Copy to clipboard
+            navigator.clipboard.writeText(urlList).then(() => {
+                alert(`Successfully imported ${backupData.addonUrls.length} addon URLs to clipboard!\n\nTo restore your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
+            }).catch(() => {
+                // Fallback if clipboard fails
+                const textArea = document.createElement('textarea')
+                textArea.value = urlList
+                document.body.appendChild(textArea)
+                textArea.select()
+                document.execCommand('copy')
+                document.body.removeChild(textArea)
+                
+                alert(`Successfully imported ${backupData.addonUrls.length} addon URLs!\n\nTo restore your addons:\n1. Open Stremio\n2. Go to Addons\n3. Click the "+" button\n4. Paste each URL one by one\n\nURLs have been copied to your clipboard.`)
+            })
             
         } catch (error) {
             console.error('Error parsing backup file:', error)
@@ -282,7 +278,7 @@ function importAddonOrder(event) {
                                 <div class="step-number">4</div>
                                 <div class="step-info">
                                     <h3 class="step-title">Backup & Restore</h3>
-                                    <p class="step-subtitle">Save or load your addon configuration</p>
+                                    <p class="step-subtitle">Save addon URLs or restore from backup</p>
                                 </div>
                                 <i class="uil uil-save step-icon"></i>
                             </div>
@@ -290,7 +286,7 @@ function importAddonOrder(event) {
                                 <div class="backup-actions">
                                     <button type="button" class="button primary" @click="exportAddonOrder">
                                         <i class="uil uil-download-alt"></i>
-                                        Export Backup
+                                        Export URLs
                                     </button>
                                     <div class="import-wrapper">
                                         <input 
@@ -300,14 +296,14 @@ function importAddonOrder(event) {
                                             @change="importAddonOrder" 
                                             style="display: none;"
                                         />
-                                        <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
+                                                                                <button type="button" class="button secondary" onclick="document.getElementById('import-file').click()">
                                             <i class="uil uil-upload-alt"></i>
-                                            Import Backup
-                </button>
+                                            Import URLs
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="backup-info">
-                                    <p><i class="uil uil-info-circle"></i> Export your current addon order as a JSON file. You can import this backup on other devices or after reinstalling Stremio.</p>
+                                    <p><i class="uil uil-info-circle"></i> Export your addon URLs as a JSON file. When you import, the URLs will be copied to your clipboard for easy reinstallation in Stremio.</p>
                                 </div>
                             </div>
                         </div>
@@ -931,6 +927,7 @@ function importAddonOrder(event) {
     }
 }
 </style>
+
 
 
 
