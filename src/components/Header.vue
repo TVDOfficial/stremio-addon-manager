@@ -67,29 +67,26 @@ defineProps({
 }
 
 .logo-image {
-  width: 180px;
-  height: 180px;
+  width: 240px;
+  height: 240px;
   object-fit: contain;
-  border-radius: var(--radius-xl);
-  background: var(--bg-color);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-2xl);
+  padding: 1rem;
 }
 
 .logo-placeholder {
-  width: 180px;
-  height: 180px;
+  width: 240px;
+  height: 240px;
   margin: 0 auto;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
 }
 
 .logo-placeholder i {
-  font-size: 4rem;
+  font-size: 5rem;
   color: white;
 }
 

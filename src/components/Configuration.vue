@@ -252,7 +252,7 @@ function showRestoreInstructions() {
                                                                         <button type="button" class="button secondary" @click="showRestoreInstructions">
                                         <i class="uil uil-question-circle"></i>
                                         How to Restore
-                                    </button>
+                </button>
                                 </div>
                                 <div class="backup-info">
                                     <p><i class="uil uil-info-circle"></i> Backup your addon URLs to a JSON file. Click "How to Restore" for instructions on manually reinstalling your addons from the backup file.</p>

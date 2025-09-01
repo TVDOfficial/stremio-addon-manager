@@ -9,14 +9,9 @@ function getDarkModePreference() {
     if (userSet !== null) {
         return userSet === 'true'
     } else {
-        // If user has no preference, use system preference
-        if (window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return true
-        }
+        // If user has no preference, default to dark mode
+        return true
     }
-
-    return false
 }
 
 function toggleMode() {

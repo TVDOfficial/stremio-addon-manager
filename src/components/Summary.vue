@@ -19,8 +19,8 @@
             </div>
           </div>
           <div class="card-body">
-            <p>
-              Stremio currently doesn't allow users to change the order that their
+    <p>
+      Stremio currently doesn't allow users to change the order that their
               installed addons appear on the home screen. As a workaround, users often
               remove and re-install addons in the order they want them to appear.
               This is a tedious and cumbersome process.
@@ -187,9 +187,9 @@
             <div class="auth-guide">
                              <div class="guide-intro">
                  <p>Connect your Stremio account. We support 2 different authentication methods:</p>
-                 <ul>
-                   <li>Login using your Stremio account (Facebook login is <strong>not supported</strong>)</li>
-                   <li>Login using an authentication key</li>
+      <ul>
+        <li>Login using your Stremio account (Facebook login is <strong>not supported</strong>)</li>
+        <li>Login using an authentication key</li>
                  </ul>
                  <div class="backup-note">
                    <i class="uil uil-save"></i>
@@ -224,7 +224,7 @@
                      </div>
                      <p>Then paste the following code snippet in the console:</p>
                      <div class="code-block">
-                       <code>JSON.parse(localStorage.getItem("profile")).auth.key</code>
+            <code>JSON.parse(localStorage.getItem("profile")).auth.key</code>
                      </div>
                    </div>
                  </div>

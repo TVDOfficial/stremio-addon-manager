@@ -6,12 +6,16 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-text">
-          <p>Made with ❤️, 🤖 and 🥞's - enjoy!</p>
+          <p>Made with ❤️, 🤖, 🥞 and 🐉's - enjoy!</p>
         </div>
         <div class="footer-links">
-          <a href="https://github.com/pancake3000/stremio-addon-manager" target="_blank" class="footer-link">
+          <a href="https://github.com/TVDOfficial/stremio-addon-manager" target="_blank" class="footer-link">
             <i class="uil uil-github"></i>
             Source Code
+          </a>
+          <a href="https://github.com/pancake3000/stremio-addon-manager" target="_blank" class="footer-link">
+            <i class="uil uil-code-branch"></i>
+            Forked from pancake3000
           </a>
         </div>
       </div>

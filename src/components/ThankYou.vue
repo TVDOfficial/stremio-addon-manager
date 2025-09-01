@@ -7,19 +7,19 @@
                 </div>
                 <h3 class="thanks-title">Thank You</h3>
                 <p class="thanks-text">
-                    Big thank you to <code class="code-highlight">Sleeyax</code> and <code class="code-highlight">&#60;Code/&#62;</code> 
+                    Big thank you to <code class="code-highlight">pancake3000</code> for the original source code, and to <code class="code-highlight">Sleeyax</code> and <code class="code-highlight">&#60;Code/&#62;</code> 
                     for the conversations and code snippets that made this really easy to implement.
                 </p>
                 <div class="github-links">
-                    <p class="github-text">Special thanks to our contributors:</p>
+                    <p class="github-text">Source Code:</p>
                     <div class="contributor-links">
-                        <a href="https://github.com/TVDOfficial" target="_blank" rel="noopener" class="contributor-link">
+                        <a href="https://github.com/TVDOfficial/stremio-addon-manager" target="_blank" rel="noopener" class="contributor-link">
                             <i class="uil uil-github"></i>
-                            <span>TVDOfficial</span>
+                            <span>Current Version</span>
                         </a>
-                        <a href="https://github.com/sleeyax" target="_blank" rel="noopener" class="contributor-link">
-                            <i class="uil uil-github"></i>
-                            <span>sleeyax</span>
+                        <a href="https://github.com/pancake3000/stremio-addon-manager" target="_blank" rel="noopener" class="contributor-link">
+                            <i class="uil uil-code-branch"></i>
+                            <span>Forked From</span>
                         </a>
                     </div>
                 </div>

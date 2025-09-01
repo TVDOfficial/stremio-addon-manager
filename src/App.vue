@@ -12,7 +12,7 @@ import Footer from './components/Footer.vue'
 <template>
   <header>
     <DarkModeToggle />
-    <Header addonName="Stremio Addon Manager"
+    <Header addonName="Stremio Addon Manager V2"
       addonSummary="Effortlessly manage the order of your Stremio addons without re-installing."
       addonTagline="Including the default Cinemeta catalogs." addonLogo="logo.png" />
   </header>
