@@ -1,4 +1,14 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+
+const adContainer = ref(null)
+
+onMounted(() => {
+  // Load AdSense ad when component mounts
+  if (window.adsbygoogle) {
+    window.adsbygoogle.push({})
+  }
+})
 </script>
 
 <template>
@@ -10,16 +20,13 @@
           <i class="uil uil-info-circle"></i>
           <span>This website is free to use. Ads help cover hosting costs and keep the service running.</span>
         </div>
-        <div class="ad-container">
+        <div class="ad-container" ref="adContainer">
           <ins class="adsbygoogle"
                style="display:block"
                data-ad-client="ca-pub-7868501272007775"
                data-ad-slot="auto"
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
         </div>
       </div>
       
