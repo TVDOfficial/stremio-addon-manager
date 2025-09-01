@@ -17,6 +17,10 @@
             <i class="uil uil-code-branch"></i>
             Forked from pancake3000
           </a>
+          <a href="https://paypal.me/mathewarpittard" target="_blank" class="footer-link coffee-link">
+            <i class="uil uil-coffee"></i>
+            Buy Me a Coffee
+          </a>
         </div>
       </div>
     </div>
@@ -70,6 +74,20 @@
 
 .footer-link i {
   font-size: 1rem;
+}
+
+.coffee-link {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.coffee-link:hover {
+  background: linear-gradient(135deg, #e55a2b, #e8851a);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 @media (max-width: 768px) {

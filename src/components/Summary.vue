@@ -202,7 +202,7 @@
                   <div class="step-number">1</div>
                   <div class="step-content">
                     <h4>Login to Stremio Web</h4>
-                    <p>Login to <a href="https://web.stremio.com/" target="_blank" rel="noopener">https://web.stremio.com/</a> using your Stremio credentials in your browser.</p>
+                    <p>Login to <a href="https://web.stremio.com/" target="_blank" rel="noopener" class="stremio-link">https://web.stremio.com/</a> using your Stremio credentials in your browser.</p>
                   </div>
                 </div>
                 
@@ -670,7 +670,22 @@ kbd {
   color: var(--font-color);
 }
 
+.stremio-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--primary-light);
+  transition: all 0.3s ease;
+}
 
+.stremio-link:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
 
 @media (max-width: 768px) {
   .features-section {
